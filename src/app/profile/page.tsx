@@ -22,9 +22,15 @@ export default function ProfilePage() {
   }
 
   const getUserDetails = async () => {
-    const res = await axios.get('/api/users/me')
-    console.log(res.data)
-    setData(res.data.data._id)
+    try {
+      const res = await axios.get('/api/users/me')
+      console.log(res.data)
+      setData(res.data.data._id)
+    } catch (error: any) {
+      console.log('Failed getting user details', error.message)
+      toast.error(error.message)
+      router.push('/login')
+    }
   }
   return (
     <Container title="Profile" className="max-w-sm">
